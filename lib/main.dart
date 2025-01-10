@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_cart/CartItem.dart';
 import 'package:shopping_cart/item.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -126,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Text(
-                    '฿${total.toStringAsFixed(2)}',
+                    '฿${NumberFormat("#,###.00").format(total)}',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.primary,

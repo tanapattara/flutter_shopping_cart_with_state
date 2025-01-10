@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_cart/item.dart';
+import 'package:intl/intl.dart';
 
 class CartItem extends StatefulWidget {
   final Item items;
@@ -49,7 +50,7 @@ class _CartItemState extends State<CartItem> {
               ),
               SizedBox(height: 4),
               Text(
-                '฿${widget.items.price.toStringAsFixed(2)}',
+                '฿${NumberFormat("#,###.00").format(widget.items.price)}',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
