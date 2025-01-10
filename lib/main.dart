@@ -38,7 +38,23 @@ class _MyHomePageState extends State<MyHomePage> {
     Item(name: 'iPad Pro', price: 10000),
   ];
 
-  int total = 0;
+  double total = 0;
+
+  void updateTotal() {
+    setState(() {
+      total = items.fold(0, (sum, item) => sum + (item.price * item.amount));
+    });
+  }
+
+  void clearCart() {
+    setState(() {
+      for (var item in items) {
+        item.amount = 0;
+      }
+      total = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                 ),
                 TextButton.icon(
-                  onPressed: () {},
+                  onPressed: clearCart,
                   label: Text('Clear Cart'),
                   icon: Icon(Icons.delete_outline),
                   style: TextButton.styleFrom(
@@ -79,7 +95,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(bottom: 8),
-                    child: CartItem(items: items[index]),
+                    child: CartItem(
+                      items: items[index],
+                      onQuantityChanged: (item) {
+                        updateTotal();
+                      },
+                    ),
                   );
                 },
               ),
@@ -105,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Text(
-                    '$total ฿',
+                    '฿${total.toStringAsFixed(2)}',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.primary,
