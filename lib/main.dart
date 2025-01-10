@@ -50,10 +50,21 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            TextButton.icon(
-                onPressed: () {},
-                label: Text('Clear Cart'),
-                icon: Icon(Icons.clear)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Cart',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                TextButton.icon(
+                    onPressed: () {},
+                    label: Text('Clear Cart'),
+                    icon: Icon(Icons.clear)),
+              ],
+            ),
             for (Item item in items)
               CartItem(
                 items: item,
