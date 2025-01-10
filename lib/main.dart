@@ -43,48 +43,77 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(
+          widget.title,
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.all(16),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Text(
-                    'Cart',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
+                Text(
+                  'Shopping Cart',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 TextButton.icon(
-                    onPressed: () {},
-                    label: Text('Clear Cart'),
-                    icon: Icon(Icons.clear)),
+                  onPressed: () {},
+                  label: Text('Clear Cart'),
+                  icon: Icon(Icons.delete_outline),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.red,
+                  ),
+                ),
               ],
             ),
-            for (Item item in items)
-              CartItem(
-                items: item,
-              ),
+            SizedBox(height: 16),
             Expanded(
-              child: Container(),
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: CartItem(items: items[index]),
+                  );
+                },
+              ),
             ),
             Container(
-                width: double.infinity,
-                height: 100,
-                color: Colors.grey[200],
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Total:'),
-                    Text('$total ฿',
-                        style: Theme.of(context).textTheme.headlineLarge),
-                  ],
-                )),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: Offset(0, -5),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total:',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    '$total ฿',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
